@@ -1,6 +1,7 @@
-using Academy.Domain.Tests.Builders;
-using Academy.Domain.Tests.ClassFixtures;
-using Academy.Domain.Tests.CollectionFixtures;
+using Academy.Domain.Exceptions;
+using Academy.Domain.Tests.Unit.Builders;
+using Academy.Domain.Tests.Unit.ClassFixtures;
+using Academy.Domain.Tests.Unit.CollectionFixtures;
 using Academy.Domain.Tests.Factories;
 
 namespace Academy.Domain.Tests.Tests {
@@ -61,6 +62,42 @@ namespace Academy.Domain.Tests.Tests {
             course.AddSection(sectionToAdd);
 
             course.Sections.Should().ContainEquivalentOf(sectionToAdd);
+        }
+
+        [Fact]
+        public void Should_BeEqualWhenIdIsSame () {
+            int sameId = 1;
+            var courseBuilder = new CourseTestBuilder();
+            var course1 = courseBuilder.withId(sameId).Build();
+            var course2 = courseBuilder.withId(sameId).Build();
+
+            var actual = course1.Equals(course2);
+
+            actual.Should().Be(true);
+            //course1.Should().Be(course2);
+        }
+
+        [Fact]
+        public void Should_NotBeEqualWhenIdIsNotSame () {
+            var courseBuilder = new CourseTestBuilder();
+            var course1 = courseBuilder.withId(1).Build();
+            var course2 = courseBuilder.withId(2).Build();
+
+            var actual = course1.Equals(course2);
+
+            actual.Should().BeFalse();
+            // course1.Should().NotBe(course2);
+        }
+
+        [Fact]
+        public void Should_NotBeEqualWhenObjectIsNull () {
+            var courseBuilder = new CourseTestBuilder();
+            var course1 = courseBuilder.withId(1).Build();
+
+            var actual = course1.Equals(null);
+
+            actual.Should().BeFalse();
+            //course1.Should().NotBe(null);
         }
     }
 }

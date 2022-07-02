@@ -1,4 +1,4 @@
-﻿using Academy.Domain.Tests.CollectionFixtures;
+﻿using Academy.Domain.Tests.Unit.CollectionFixtures;
 
 namespace Academy.Domain.Tests.Factories {
     [Collection("Database Collection")]

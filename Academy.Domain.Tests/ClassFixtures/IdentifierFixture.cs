@@ -1,5 +1,5 @@
 ﻿
-namespace Academy.Domain.Tests.ClassFixtures {
+namespace Academy.Domain.Tests.Unit.ClassFixtures {
     public class IdentifierFixture: IDisposable { 
         public static Guid Id{ get; set; }
 

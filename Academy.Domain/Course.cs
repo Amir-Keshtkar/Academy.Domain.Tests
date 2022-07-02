@@ -1,4 +1,6 @@
 ﻿
+using Academy.Domain.Exceptions;
+
 namespace Academy.Domain {
     public class Course {
         public int Id { get; set; }
@@ -33,6 +35,14 @@ namespace Academy.Domain {
 
         public void AddSection (Section sectionToAdd) {
             Sections.Add(sectionToAdd);
+        }
+
+        public override bool Equals (object obj) {
+            var course = obj as Course;
+            if(obj == null) {
+                return false;
+            }
+            return Id == course.Id;
         }
     }
 }

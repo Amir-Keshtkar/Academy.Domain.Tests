@@ -1,4 +1,4 @@
-﻿namespace Academy.Domain {
+﻿namespace Academy.Domain.Exceptions {
     public class CourseTuitionIsInvalidException: Exception {
     }
 }
