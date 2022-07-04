@@ -48,5 +48,37 @@ namespace Academy.Infrastrucure.Tests.Unit {
 
             actual.Should().BeNull();
         }
+
+        [Fact]
+        public void Should_DeleteCourseFromStore () {
+            const int id = 3;
+            var course = _courseTestBuilder.withId(id).Build();
+            _courseRepository.Create(course);
+
+            _courseRepository.Delete(id);
+
+            _courseRepository.Courses.Should().NotContain(course);
+        }
+
+        [Fact]
+        public void Should_ReturnCourseByName () {
+            const string amiri = "amiri";
+            var expectedCourse = _courseTestBuilder.withName(amiri).Build();
+            _courseRepository.Create(expectedCourse);
+
+            var actual = _courseRepository.GetBy(amiri);
+
+            //actual.Name.Should().Be(amiri);
+            expectedCourse.Should().Be(actual);
+        }
+
+        [Fact]
+        public void Should_ReturnNull_WhenCourseWithNameNotExists () {
+            const string name="instruction";
+
+            var actual = _courseRepository.GetBy(name);
+
+            actual.Should().BeNull();
+        }
     }
 }
