@@ -1,29 +1,43 @@
 ﻿using Academy.Domain;
 
-namespace Academy.Infrastrucure.Tests.Unit {
-    public class CourseRepository: ICourseRepository {
-        public List<Course> Courses = new List<Course>() {
-            new Course(1,"amir", true, 100.1f, "instruction"),
-        };
+namespace Academy.Infrastructure
+{
+    public class CourseRepository : ICourseRepository
+    {
+        private readonly AcademyContext _context;
 
-        public void Create(Course course) {
-            Courses.Add(course);
+        public CourseRepository(AcademyContext context)
+        {
+            _context = context;
         }
 
-        public List<Course> GetAll() {
-            return Courses;
+        public int Create(Course course)
+        {
+            _context.Courses.Add(course);
+            _context.SaveChanges();
+            return course.Id;
         }
 
-        public Course GetBy(int id) {
-            return Courses.FirstOrDefault(x => x.Id == id)!;
+        public void Delete(int id)
+        {
+            var course=_context.Courses.FirstOrDefault(x=>x.Id==id);
+            _context.Courses.Remove(course);
+            _context.SaveChanges();
         }
 
-        public void Delete(int id) {
-            Courses.Remove(GetBy(id));
+        public List<Course> GetAll()
+        {
+            return _context.Courses.ToList();
         }
 
-        public Course GetBy(string name) {
-            return Courses.FirstOrDefault(x => x.Name == name)!;
+        public Course GetBy(int id)
+        {
+            return _context.Courses.Find(id)!;
+        }
+
+        public Course GetBy(string name)
+        {
+            return _context.Courses.FirstOrDefault(x=> x.Name==name)!;
         }
     }
 }

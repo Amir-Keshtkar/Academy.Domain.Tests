@@ -36,10 +36,11 @@ namespace Academy.Application.Tests.Unit
         public void Should_CreateANewCourseAndReturnId()
         {
             var command = SomeCreateCourse();
+            _courseRepository.Create(default).ReturnsForAnyArgs(10);
 
             var actual = _courseService.Create(command);
 
-            actual.Should().Be(command.Id);
+            actual.Should().BeGreaterThan(0);
         }
 
         [Fact]

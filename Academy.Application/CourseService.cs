@@ -1,22 +1,25 @@
 ﻿using Academy.Domain;
 using Academy.Domain.Exceptions;
 
-namespace Academy.Application {
-    public class CourseService : ICourseService{
+namespace Academy.Application
+{
+    public class CourseService : ICourseService
+    {
         private readonly ICourseRepository _courseRepository;
 
-        public CourseService (ICourseRepository courseRepository) {
+        public CourseService(ICourseRepository courseRepository)
+        {
             _courseRepository = courseRepository;
         }
 
-        public int Create (CreateCourse command) {
-            if(_courseRepository.GetBy(command.Id) != null) {
+        public int Create(CreateCourse command)
+        {
+            if (_courseRepository.GetBy(command.Id) != null)
+            {
                 throw new DuplicatedCourseNameException();
             }
-            var course = new Course(command.Id, command.Name, command.IsOnline, command.Tuition, command.Instructor);
-            _courseRepository.Create(course);
-
-            return command.Id;
+            var course = new Course(command.Name, command.IsOnline, command.Tuition, command.Instructor);
+            return _courseRepository.Create(course);
         }
 
         public void Edit(EditCourse command)
@@ -26,7 +29,7 @@ namespace Academy.Application {
                 throw new CourseNotExistException();
             }
             _courseRepository.Delete(command.Id);
-            var course = new Course(command.Id, command.Name, command.IsOnline, command.Tuition, command.Instructor);
+            var course = new Course(command.Name, command.IsOnline, command.Tuition, command.Instructor);
             _courseRepository.Create(course);
 
             //var course = _courseRepository.GetBy(command.Id);

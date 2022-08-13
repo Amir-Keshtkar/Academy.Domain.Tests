@@ -2,22 +2,25 @@ using Academy.Domain.Exceptions;
 using Academy.Domain.Tests.Unit.Builders;
 using Academy.Domain.Tests.Unit.ClassFixtures;
 using Academy.Domain.Tests.Unit.CollectionFixtures;
-using Academy.Domain.Tests.Factories;
+using Academy.Domain.Tests.Unit.Factories;
 
-namespace Academy.Domain.Tests.Tests {
+namespace Academy.Domain.Tests.Unit.Tests
+{
 
     [Collection("Database Collection")]
-    public class CourseTests: IClassFixture<IdentifierFixture> {
+    public class CourseTests : IClassFixture<IdentifierFixture>
+    {
         private readonly CourseTestBuilder _courseTestBuilder;
 
-        public CourseTests (DatabaseFixture databaseFixture) {
+        public CourseTests(DatabaseFixture databaseFixture)
+        {
             _courseTestBuilder = new CourseTestBuilder();
         }
 
         [Fact]
-        public void Constructor_ShouldConstructCourseProperly () {
+        public void Constructor_ShouldConstructCourseProperly()
+        {
             var guild = IdentifierFixture.Id;
-            const int id = 1;
             const string name = "TDD & BDD";
             const bool isOnline = true;
             const double tuition = 600;
@@ -25,7 +28,6 @@ namespace Academy.Domain.Tests.Tests {
 
             var course = _courseTestBuilder.Build();
 
-            course.Id.Should().Be(id);
             course.Name.Should().Be(name);
             course.IsOnline.Should().Be(isOnline);
             course.Tuition.Should().Be(tuition);
@@ -39,7 +41,8 @@ namespace Academy.Domain.Tests.Tests {
         }
 
         [Fact]
-        public void Constructor_ShouldThrowException_When_NameIsNotProvided () {
+        public void Constructor_ShouldThrowException_When_NameIsNotProvided()
+        {
             var guild = IdentifierFixture.Id;
             var courseTestBuilder = _courseTestBuilder.withName("");
             Action course = () => courseTestBuilder.Build();
@@ -48,14 +51,16 @@ namespace Academy.Domain.Tests.Tests {
         }
 
         [Fact]
-        public void Constructor_ShouldThrowException_When_TuitionIsNotProvided () {
+        public void Constructor_ShouldThrowException_When_TuitionIsNotProvided()
+        {
             Action course = () => _courseTestBuilder.withTuition(0).Build();
             course.Should().ThrowExactly<CourseTuitionIsInvalidException>();
             //Assert.Throws<Exception>(course);
         }
 
         [Fact]
-        public void AddSection_ShouldAddNewSections_whenIdAndNamePassed () {
+        public void AddSection_ShouldAddNewSections_whenIdAndNamePassed()
+        {
             var course = _courseTestBuilder.Build();
             var sectionToAdd = SectionFactory.Create();
 
@@ -65,11 +70,14 @@ namespace Academy.Domain.Tests.Tests {
         }
 
         [Fact]
-        public void Should_BeEqualWhenIdIsSame () {
+        public void Should_BeEqualWhenIdIsSame()
+        {
             int sameId = 1;
             var courseBuilder = new CourseTestBuilder();
-            var course1 = courseBuilder.withId(sameId).Build();
-            var course2 = courseBuilder.withId(sameId).Build();
+            var course1 = courseBuilder.Build();
+            course1.Id=sameId;
+            var course2 = courseBuilder.Build();
+            course2.Id=sameId;
 
             var actual = course1.Equals(course2);
 
@@ -78,10 +86,13 @@ namespace Academy.Domain.Tests.Tests {
         }
 
         [Fact]
-        public void Should_NotBeEqualWhenIdIsNotSame () {
+        public void Should_NotBeEqualWhenIdIsNotSame()
+        {
             var courseBuilder = new CourseTestBuilder();
-            var course1 = courseBuilder.withId(1).Build();
-            var course2 = courseBuilder.withId(2).Build();
+            var course1 = courseBuilder.Build();
+            course1.Id=1;
+            var course2 = courseBuilder.Build();
+            course2.Id=2;
 
             var actual = course1.Equals(course2);
 
@@ -90,9 +101,10 @@ namespace Academy.Domain.Tests.Tests {
         }
 
         [Fact]
-        public void Should_NotBeEqualWhenObjectIsNull () {
+        public void Should_NotBeEqualWhenObjectIsNull()
+        {
             var courseBuilder = new CourseTestBuilder();
-            var course1 = courseBuilder.withId(1).Build();
+            var course1 = courseBuilder.Build();
 
             var actual = course1.Equals(null);
 

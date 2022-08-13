@@ -1,15 +1,9 @@
 ﻿namespace Academy.Domain.Tests.Unit.Builders {
     public class CourseTestBuilder {
-        private int Id = 1;
         private string Name = "TDD & BDD";
         private readonly bool isOnline = true;
         private double Tuition = 600;
-        private string instructor = "instructor";
-
-        public CourseTestBuilder withId (int id) {
-            Id = id;
-            return this;
-        }
+        private string Instructor = "instructor";
 
         public CourseTestBuilder withName (string name) {
             Name = name;
@@ -21,8 +15,14 @@
             return this;
         }
 
+        public CourseTestBuilder withInstructor(string instructor)
+        {
+            Instructor=instructor;
+            return this;
+        }
+
         public Course Build () {
-            return new Course(Id, Name, isOnline, Tuition, instructor);
+            return new Course(Name, isOnline, Tuition, Instructor);
         }
     }
 }
