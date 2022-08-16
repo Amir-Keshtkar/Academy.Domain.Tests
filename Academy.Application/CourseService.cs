@@ -22,7 +22,7 @@ namespace Academy.Application
             return _courseRepository.Create(course);
         }
 
-        public void Edit(EditCourse command)
+        public int Edit(EditCourse command)
         {
             if (_courseRepository.GetBy(command.Id) == null)
             {
@@ -30,7 +30,7 @@ namespace Academy.Application
             }
             _courseRepository.Delete(command.Id);
             var course = new Course(command.Name, command.IsOnline, command.Tuition, command.Instructor);
-            _courseRepository.Create(course);
+            return _courseRepository.Create(course);
 
             //var course = _courseRepository.GetBy(command.Id);
             //course.Id = command.Id;
@@ -49,6 +49,11 @@ namespace Academy.Application
         public List<Course> GetAll()
         {
             return _courseRepository.GetAll();
+        }
+
+        public Course GetBy(int id)
+        {
+            return _courseRepository.GetBy(id);
         }
     }
 }

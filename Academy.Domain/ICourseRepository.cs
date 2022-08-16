@@ -8,5 +8,6 @@ namespace Academy.Domain {
         Course GetBy(int id);
         Course GetBy(string name);
         void Delete(int id);
+        //void Update(Course course);
     }
 }

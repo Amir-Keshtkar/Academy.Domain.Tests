@@ -39,5 +39,10 @@ namespace Academy.Infrastructure
         {
             return _context.Courses.FirstOrDefault(x=> x.Name==name)!;
         }
+
+        //public void Update(Course course)
+        //{
+        //    _context.Courses.Update(course);
+        //}
     }
 }
